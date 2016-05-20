@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "isAlive";
+}
+
+<h2>isAlive</h2>
+
+<button>Alive</button>
+
+@section Scripts {
+    <script>
+        
+        $("button").click(function () {
+            $.get("/api/isAlive", function (data) {
+                    alert("Data: " + data.v);   
+            });
+        });
+        
+
+    </script>
+}
+   
