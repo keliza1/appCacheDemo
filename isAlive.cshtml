@@ -10,12 +10,23 @@
 @section Scripts {
     <script>
         
+         $("button").click(function () {
+            $.get("/api/isAlive")
+              .success(function (data) {
+                  alert("Data: " + data.v);
+              })
+              .error(function (jqXHR, status, error) {
+                  alert("ERROR");
+              });
+        });
+        
+        /*
         $("button").click(function () {
             $.get("/api/isAlive", function (data) {
                     alert("Data: " + data.v);   
             });
         });
-        
+        */
 
     </script>
 }
