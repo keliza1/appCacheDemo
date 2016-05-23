@@ -15,6 +15,7 @@ namespace AppCacheDemo_1.Controllers
     {
         public T_t Get()
         {
+            //throw new Exception("isAlive Exception");
             var v = new T_t();
             v.v = true;
             return v;
