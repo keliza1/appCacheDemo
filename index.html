@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html manifest="/manifest.appcache" xmlns="http://www.w3.org/1999/xhtml">
 <head> 
     <title></title>
@@ -6,32 +6,59 @@
 </head>
 <body>
     <div id="pic" style="text-align:center">
-      <img src="Images/tigersLogo.png" alt="LSU logo" />
+      <img src="Images/tigersLogo.png" alt="LSU logo"/>
 	</div> 
+    <br/>
 
-    <br />
-    <button>Alive?</button>
+    <p>Status: </p>
+    <p id="message"></p>
+
+    <button id="aliveButton">Alive?</button>
+
+    <button id="offlineButton">Go Offline</button>
 
     <script src="/Scripts/jquery-1.8.2.min.js"></script>
 
     <script>
 
-        $("button").click(function () {
-            $.get("/api/isAlive", function (data) {   
-                if (data.v === true) {
+        $("#aliveButton").click(function () {
+            $.get("/api/isAlive")
+              .success(function (data) {
 
-                    window.applicationCache.swapCache();
-                    window.location.reload();
-                           
-                }
-                
-                
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
-                } 
+                  $("#message").empty();
+                  $("#message").append("Online");
 
-                //alert("Data: " + data.v);
-            });
+                  window.applicationCache.swapCache();
+                  window.location.reload();
+
+                  //alert("Data: " + data.v);
+              })
+              .error(function (jqXHR, status, error) {
+
+                  $("p").empty();
+                  $("p").append("Offline Mode");
+
+                  alert("ERROR");
+                  
+              });
+        });
+
+
+        $("#offlineButton").click(function () {
+            $("#message").empty();
+            $("#message").append("Offline Mode");
+            /*click again:
+                try to go online again: $.get("/api/isAlive")
+                    if successful, status changed to online and page is reloaded if manifest has changed
+                    if not, error message pops up (try again later); status remains offline
+            */
+            /*
+            1) Go offline (set status to offline) $("p").append("Offline Mode");
+            2) Display last cached page
+            3) If clicked again, attempt will be made to go online again
+            4) If successful, status changes to online and page is reloaded if manifest has changed 
+            5) If not, status remains the same and error/failuire message is displayed
+            */
         });
 
       
