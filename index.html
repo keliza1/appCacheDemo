@@ -21,22 +21,57 @@
 
     <script>
 
-        $("#aliveButton").click(function () {
+        var status;
+
+        function giveStatus() {
             $.get("/api/isAlive")
               .success(function (data) {
 
-                  $("#message").empty();
-                  $("#message").append("Online");
+                  status = "Online";
+
+                  //$("#message").empty();
+                  $("#message").append(status);
 
                   window.applicationCache.swapCache();
                   window.location.reload();
 
+
                   //alert("Data: " + data.v);
               })
               .error(function (jqXHR, status, error) {
-
+                  status = "Offline";
                   $("p").empty();
-                  $("p").append("Offline Mode");
+                  $("p").append(status);
+
+                  alert("ERROR");
+
+              });
+        }
+
+        giveStatus();
+
+        
+        /*
+
+        $("#aliveButton").click(function () {
+            $.get("/api/isAlive")
+              .success(function (data) {
+
+                  status = "Online";
+
+                  //$("#message").empty();
+                  $("#message").append(status);
+
+                  window.applicationCache.swapCache();
+                  window.location.reload();
+
+
+                  //alert("Data: " + data.v);
+              })
+              .error(function (jqXHR, status, error) {
+                  status = "Offline";
+                  //$("p").empty();
+                  $("p").append(status);
 
                   alert("ERROR");
                   
@@ -51,17 +86,21 @@
                 try to go online again: $.get("/api/isAlive")
                     if successful, status changed to online and page is reloaded if manifest has changed
                     if not, error message pops up (try again later); status remains offline
-            */
-            /*
+            
+            
             1) Go offline (set status to offline) $("p").append("Offline Mode");
             2) Display last cached page
             3) If clicked again, attempt will be made to go online again
             4) If successful, status changes to online and page is reloaded if manifest has changed 
             5) If not, status remains the same and error/failuire message is displayed
-            */
+            
         });
 
+       
       
+        
+
+
         /*
         if (window.applicationCache) {
             window.applicationCache.addEventListener('updateready', function () {
