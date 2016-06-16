@@ -20,6 +20,8 @@ namespace AppCacheDemo_1.Controllers
             v.v = true;
             return v;
         }
+        
+        //need random number generator to randomize true/false response
     }
 
     
