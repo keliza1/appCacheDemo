@@ -11,24 +11,29 @@ namespace AppCacheDemo_1.Controllers
     {
         public Boolean v;
     }
+
     public class isAliveController : ApiController
     {
         public T_t Get()
         {
             //throw new Exception("isAlive Exception");
             var v = new T_t();
-            v.v = true;
+
+            Random rg = new Random(); 
+            double n = rg.NextDouble(); 
+            if (n <= 0.5)
+            {
+                v.v = true;
+            }
+            else
+            {
+                v.v = false;
+            }
+
+            //v.v = true;
             return v;
         }
 
-        /*need random number generator to randomize true/false response
-         * generate random integer from 1-10
-         * for (i<6) { v = true }
-         * else { v = false }
-         * can change percentage of time v is equal to true and false
-        */
-
     }
 
-    
 }
